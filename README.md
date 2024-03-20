@@ -1,7 +1,7 @@
 
 # NEUTR - NEUmann Technical Reports
 
-This repository hosts the source code for the [CTAN](https://ctan.org/)package [NEUTR](https://ctan.org/pkg/neutr).
+This repository hosts the source code for the [CTAN](https://ctan.org/) package [NEUTR](https://ctan.org/pkg/neutr).
 
 The NEUTR package enhances a LaTeX installation with a LaTeX class for writing technical reports.
 The style is a two-column format similar to IEEE. It is intendet for student team projects at universities as project result report. It provides a beginner friendly template example.
