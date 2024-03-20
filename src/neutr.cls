@@ -75,7 +75,7 @@
 
 % Set English as language and allow to write hyphenated"=words
 %
-% Even though `american`, `english` and `USenglish` are synonyms for babel package (according to https://tex.stackexchange.com/questions/12775/babel-english-american-usenglish), the llncs document class is prepared to avoid the overriding of certain names (such as "Abstract." -> "Abstract" or "Fig." -> "Figure") when using `english`, but not when using the other 2.
+% Even though `american`, `english` and `usenglish` are synonyms for babel package (according to https://tex.stackexchange.com/questions/12775/babel-english-american-usenglish), the llncs document class is prepared to avoid the overriding of certain names (such as "Abstract." -> "Abstract" or "Fig." -> "Figure") when using `english`, but not when using the other 2.
 % english has to go last to set it as default language
 \RequirePackage[ngerman,main=english]{babel}
 %
@@ -488,7 +488,7 @@
   \typeout{Neutr class: load pbalance package.}
   \RequirePackage{pbalance}
 \fi
-% Flushend => Major incampatibility with lineno (and, thus, also with mindflow et al.)
+% Flushend => works with arxiv, but major incampatibility with lineno (and, thus, also with mindflow et al.)
 \ifnum\value{neutr@flushendtracker}=1
   \typeout{Neutr class: load flushend package.}
   \RequirePackage{flushend}

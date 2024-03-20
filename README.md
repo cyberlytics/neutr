@@ -3,9 +3,9 @@
 
 This repository hosts the source code for the [CTAN](https://ctan.org/)package [NEUTR](https://ctan.org/pkg/neutr).
 
-The package enhances a LaTeX installation with a LaTeX class for writing technical reports.
-The style is adopted from IEEE.
-The neutr class requires the latex/pdflatex in combination with biblatex using a biber backend.
+The NEUTR package enhances a LaTeX installation with a LaTeX class for writing technical reports.
+The style is a two-column format similar to IEEE. It is intendet for student team projects at universities as project result report. It provides a beginner friendly template example.
+The neutr class requires latex/pdflatex in combination with biblatex using a biber backend.
 
 DISCLAIMER: This neutr class does not support XeLaTeX or LuaTeX nor legacy bibtex or natbib.
 
@@ -55,7 +55,7 @@ All build artifacts can be found in `build`. The `Makefile` builds the following
 
 * `neutr.ins` and `neutr.dtx` which contains the LaTeX installation package and the documentation source.
 * `neutr.pdf` the documentation of the class
-* `CV-template_*.pdf` PDF files of the NEUTR template documents
+* `*-example-*.zip` include TEX+PDF example based on this class
 
 ## Build dependencies
 

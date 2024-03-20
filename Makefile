@@ -1,31 +1,32 @@
-neutr = $(shell head -1 LICENSE.txt |cut -d\  -f3-)
+AUTHORS = $(shell head -1 LICENSE |cut -d\  -f3-)
 
 SRC = $(notdir $(wildcard src/*))
-OBJ = build/obj/ecv.ins build/obj/ecv.dtx
-DOC_PDF = build/doc/ecv.pdf
-TEMPLATE_PDFS = $(patsubst %.tex,build/doc/%.pdf,$(notdir $(wildcard static/template/*.tex)))
+OBJ = build/obj/neutr.ins build/obj/neutr.dtx
+DOC_PDF = build/doc/neutr.pdf
 LICENSE = build/dist/COPYING
-ARCHIVE = dist/ecv.zip
-LICENSE_TEXT = $(shell cat LICENSE.txt)
+ARCHIVE = dist/neutr.zip
+LICENSE_TEXT = $(shell cat LICENSE)
 
 VPATH = src
 
-LATEX = latexmk -latexoption=-interaction=nonstopmode -latexoption=-halt-on-error -pdf
+#LATEXMK = latexmk -latexoption=-interaction=nonstopmode -latexoption=-halt-on-error -pdf
+LATEXMK = texliveonfly --compiler=latexmk --arguments='-shell-escape -pdf'
+
 MAKEDTX = build/tools/makedtx/makedtx.pl
 MAKEDTX_ARCHIVE = makedtx-1_2.zip
 
 default: compile
 
-compile: $(OBJ) $(DOC_PDF) $(TEMPLATE_PDFS)
+compile: $(OBJ) $(DOC_PDF)
 
 dist : $(ARCHIVE)
 
-$(ARCHIVE) : $(OBJ) $(DOC_PDF) $(TEMPLATE_PDFS) $(LICENSE)
+$(ARCHIVE) : $(OBJ) $(DOC_PDF) $(LICENSE)
 	mkdir -p build/dist
 	cp -r static/* build/dist
+	cd build/dist; unzip -o *.zip -d "template"
+	rm build/dist/*.zip
 	cp $(OBJ) $(DOC_PDF) build/dist
-	mkdir -p build/dist/template
-	cp $(TEMPLATE_PDFS) build/dist/template
 	mkdir -p dist
 	cd build/dist; zip -r ../../$@ *
 
@@ -42,28 +43,22 @@ $(OBJ) : $(SRC) $(MAKEDTX)
 		-macrocode ".*" \
 		-src "($(subst $() $(),|,$(SRC)))=>\1" \
 		-dir "src" \
-		-author "$(neutr)" \
-		-date "2006-$(shell date +%Y)" \
+		-author "$(AUTHORS)" \
+		-date "2023-$(shell date +%Y)" \
 		-setambles ".*=>\nopreamble" \
-		-doc "doc/ecv.tex" \
+		-doc "doc/neutr.tex" \
 		-preamble "$(LICENSE_TEXT)" \
-		ecv
-	sed -e "$$(($$(wc -l < ecv.ins)-1))r patch/msg.txt" ecv.ins
+		neutr
+	sed -e "$$(($$(wc -l < neutr.ins)-1))r patch/msg.txt" neutr.ins
 	mv $(notdir $(OBJ)) build/obj
 
-# Build template PDFs
-build/doc/%.pdf : static/template/%.tex
-	mkdir -p build/doc
-	cp $< static/template/Makefile static/template/*.png build/doc
-	$(MAKE) -C build/doc $(notdir $@)
-
-# Build Documentation PDF from ecv.dtx
-$(DOC_PDF) : build/obj/ecv.dtx
+# Build Documentation PDF from neutr.dtx
+$(DOC_PDF) : build/obj/neutr.dtx
 	mkdir -p build/doc
 	cp $< build/doc
-	cd build/doc; $(LATEX) ecv.dtx
+	cd build/doc; $(LATEXMK) neutr.dtx
 
-$(LICENSE) : LICENSE.txt
+$(LICENSE) : LICENSE
 	mkdir -p build/dist
 	cp $^ $@
 
